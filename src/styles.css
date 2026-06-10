@@ -122,6 +122,14 @@ canvas{display:block;width:100%;height:auto;border-radius:10px;touch-action:none
 /* phones / portrait */
 @media (max-width:540px){
   #title{font-size:17px;letter-spacing:3px}
+  /* The stage is too short on phones to contain the menu — pinning the
+     overlay inside it makes buttons overflow their parent, and iOS Safari
+     drops taps on overflowed regions. Full-screen fixed menu instead. */
+  .overlay{
+    position:fixed;inset:0;border-radius:0;
+    overflow-y:auto;justify-content:center;
+    padding:24px 16px calc(24px + env(safe-area-inset-bottom));
+  }
   .overlay h1{font-size:36px;letter-spacing:5px}
   .overlay p{font-size:19px}
   .slot{width:24px;height:32px;font-size:24px}

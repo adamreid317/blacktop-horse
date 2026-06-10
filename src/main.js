@@ -58,6 +58,17 @@ bus.on('turnstart', () => fx.clearTrail());
 
 let last = performance.now();
 function loop(now) {
+  // a single bad frame must never kill the rAF chain — that would freeze
+  // the game until a reload
+  try {
+    frame(now);
+  } catch (err) {
+    console.error('frame error', err);
+  }
+  requestAnimationFrame(loop);
+}
+
+function frame(now) {
   const raw = Math.min(0.034, (now - last) / 1000);
   last = now;
 
@@ -87,25 +98,27 @@ function loop(now) {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, W, H);
   cam.apply(ctx);
-  scene.drawSky(ctx);
-  crowd.draw(ctx);
-  scene.drawCourt(ctx, now / 1000);
-  figures.draw(ctx);
-  fx.drawTrail(ctx);
-  if (S.state === 'aim') scene.drawAim(ctx);
-  if (S.ball && (S.state === 'flight' || S.state === 'resolve')) {
-    scene.drawBall(ctx, S.ball, S.hot[S.shooter]);
+  try {
+    scene.drawSky(ctx);
+    crowd.draw(ctx);
+    scene.drawCourt(ctx, now / 1000);
+    figures.draw(ctx);
+    fx.drawTrail(ctx);
+    if (S.state === 'aim') scene.drawAim(ctx);
+    if (S.ball && (S.state === 'flight' || S.state === 'resolve')) {
+      scene.drawBall(ctx, S.ball, S.hot[S.shooter]);
+    }
+    fx.drawParticles(ctx);
+    if (S.ball && S.ball.scored && (S.state === 'flight' || S.state === 'resolve')) {
+      ctx.fillStyle = C.chalk;
+      ctx.font = "800 30px 'Barlow Condensed'";
+      ctx.textAlign = 'center';
+      ctx.fillText('BUCKET!', RIM_CX - 40, RIM.y - 58);
+    }
+  } finally {
+    ctx.restore();
   }
-  fx.drawParticles(ctx);
-  if (S.ball && S.ball.scored && (S.state === 'flight' || S.state === 'resolve')) {
-    ctx.fillStyle = C.chalk;
-    ctx.font = "800 30px 'Barlow Condensed'";
-    ctx.textAlign = 'center';
-    ctx.fillText('BUCKET!', RIM_CX - 40, RIM.y - 58);
-  }
-  ctx.restore();
 
   hud.tick();
-  requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
