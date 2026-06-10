@@ -13,7 +13,11 @@ let cbs = {};
 export function init(c) {
   cbs = c;
   document.querySelectorAll('#startOv button[data-k]').forEach((b) => {
-    b.addEventListener('click', () => { aud.unlock(); cbs.onStart(b.dataset.k); });
+    // start the game FIRST — audio must never be able to block it
+    b.addEventListener('click', () => {
+      cbs.onStart(b.dataset.k);
+      try { aud.unlock(); } catch (e) {}
+    });
   });
   $('rematch').addEventListener('click', () => cbs.onRematch());
   $('switchDiff').addEventListener('click', () => {

@@ -15,8 +15,8 @@ export function init() {
   modsEl.querySelectorAll('.chip').forEach((ch) => {
     ch.addEventListener('click', () => {
       if (!modsEl.classList.contains('show')) return;
-      aud.unlock(); aud.ui();
       bus.emit('callmod', ch.dataset.mod || null);
+      try { aud.unlock(); aud.ui(); } catch (e) {}
     });
   });
 
@@ -26,7 +26,10 @@ export function init() {
     mb.classList.toggle('muted', m);
   };
   paintMute(aud.isMuted());
-  mb.addEventListener('click', () => { aud.unlock(); paintMute(aud.toggleMute()); });
+  mb.addEventListener('click', () => {
+    try { aud.unlock(); } catch (e) {}
+    paintMute(aud.toggleMute());
+  });
 }
 
 export function say(text, tag) {

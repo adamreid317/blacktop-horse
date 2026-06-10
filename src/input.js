@@ -26,12 +26,12 @@ function toWorld(e) {
 }
 
 function down(e) {
-  unlock();
+  try { unlock(); } catch (err) {}
   const p = toWorld(e);
   if (game.trySpotTap(p)) return;
   if (S.state === 'aim') {
     S.drag = { sx: p.x, sy: p.y, cx: p.x, cy: p.y };
-    cv.setPointerCapture(e.pointerId);
+    try { cv.setPointerCapture(e.pointerId); } catch (err) {}
   }
 }
 

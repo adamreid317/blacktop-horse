@@ -2,7 +2,7 @@
    - navigations (the HTML): network-first, so deployed fixes arrive on the
      next load; cache fallback keeps it working offline
    - assets: stale-while-revalidate for instant loads */
-const CACHE = 'blacktop-horse-v2';
+const CACHE = 'blacktop-horse-v3';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();

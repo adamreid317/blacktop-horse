@@ -15,6 +15,17 @@ import * as overlays from './ui/overlays.js';
 import * as aud from './audio.js';
 import { initPWA } from './pwa.js';
 
+/* surface any runtime error on screen — phones have no console, and a
+   silent exception is exactly the kind of bug we can't diagnose remotely */
+function showError(m) {
+  const el = document.getElementById('hint');
+  if (!el) return;
+  el.textContent = '⚠ ' + String(m).slice(0, 120);
+  el.style.color = '#e8762d';
+}
+window.addEventListener('error', (e) => showError(e.message || e.type));
+window.addEventListener('unhandledrejection', (e) => showError(e.reason || 'promise rejection'));
+
 const cv = document.getElementById('c');
 const ctx = cv.getContext('2d');
 const dpr = Math.min(2, window.devicePixelRatio || 1);

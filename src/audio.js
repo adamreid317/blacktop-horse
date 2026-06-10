@@ -13,8 +13,8 @@ export function unlock() {
       master.connect(ctx.destination);
     } catch (e) { return; }
   }
-  if (ctx.state === 'suspended') ctx.resume();
-  if (!ambientStarted) { ambientStarted = true; startAmbient(); }
+  if (ctx.state === 'suspended') { const p = ctx.resume(); if (p && p.catch) p.catch(() => {}); }
+  if (!ambientStarted) { ambientStarted = true; try { startAmbient(); } catch (e) {} }
 }
 
 export function isMuted() { return muted; }
