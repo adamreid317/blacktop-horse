@@ -1,0 +1,15 @@
+{
+  "name": "blacktop-horse",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "icons": "node scripts/gen-icons.mjs"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
+}

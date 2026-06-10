@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Blacktop H.O.R.S.E.</title>
+<meta name="description" content="Slingshot HORSE on a dusk blacktop. Beat Buckets before he spells you out.">
+<meta name="theme-color" content="#15161c">
+<meta property="og:title" content="Blacktop H.O.R.S.E.">
+<meta property="og:description" content="Beat Buckets at HORSE. Five letters and you walk home.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="H.O.R.S.E.">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,800;1,600&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<script type="module" src="/src/main.js"></script>
+</head>
+<body>
+<div id="wrap">
+  <div id="title">BLACKTOP H.O.R.S.E.<small>five letters and you walk home</small></div>
+  <div id="hud">
+    <div class="side">
+      <div class="who">You <span id="hotYou" class="hot-flag hidden">🔥</span></div>
+      <div class="letters" id="lettersYou"></div>
+    </div>
+    <div class="side right">
+      <div class="who"><span id="hotNpc" class="hot-flag hidden">🔥</span> Buckets</div>
+      <div class="letters" id="lettersNpc"></div>
+    </div>
+  </div>
+  <div id="stage">
+    <canvas id="c" width="900" height="520"></canvas>
+    <button id="muteBtn" aria-label="Toggle sound">🔊</button>
+    <div class="overlay" id="startOv">
+      <h1>H.<span>O</span>.R.S.E.</h1>
+      <p>Make your shot and Buckets has to match it. He makes his, you have to match him. Miss a match, take a letter. Spell HORSE and it's over.</p>
+      <p class="small">Call bank shots, moon balls and no-preview to mess with him. Three makes in a row and you're cooking.</p>
+      <div class="btnrow">
+        <button data-k="rookie">Rookie<small id="recRookie"></small></button>
+        <button data-k="pro" class="hot">Pro<small id="recPro"></small></button>
+        <button data-k="hof">Hall of Fame<small id="recHof"></small></button>
+      </div>
+    </div>
+    <div class="overlay hidden" id="endOv">
+      <h1 id="endTitle"></h1>
+      <p id="endText"></p>
+      <p class="stats" id="endStats"></p>
+      <div class="btnrow">
+        <button class="hot" id="rematch">Run it back</button>
+        <button id="switchDiff">Difficulty</button>
+        <button id="shareBtn">Share it</button>
+      </div>
+    </div>
+  </div>
+  <div id="mods">
+    <span class="mods-label">Call it:</span>
+    <button class="chip sel" data-mod="">Straight up</button>
+    <button class="chip" data-mod="bank">Bank shot</button>
+    <button class="chip" data-mod="moon">Moon ball</button>
+    <button class="chip" data-mod="nopreview">No preview</button>
+  </div>
+  <div id="msg">&nbsp;</div>
+  <div id="hint">&nbsp;</div>
+</div>
+</body>
+</html>

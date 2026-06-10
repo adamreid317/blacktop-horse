@@ -1,0 +1,132 @@
+:root{
+  --asphalt:#1d1e25;
+  --asphalt-deep:#15161c;
+  --chalk:#ece7da;
+  --chalk-dim:#9b978c;
+  --ball:#e8762d;
+  --dusk-top:#2b2d4a;
+  --dusk-mid:#6e4a6b;
+  --dusk-glow:#c96f4a;
+  --teal:#7fd1c0;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overscroll-behavior:none}
+body{
+  background:var(--asphalt-deep);
+  color:var(--chalk);
+  font-family:'Barlow Condensed',system-ui,sans-serif;
+  display:flex;flex-direction:column;align-items:center;
+  min-height:100svh;
+}
+#wrap{
+  width:100%;max-width:920px;
+  padding:10px 8px calc(18px + env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;gap:8px;
+}
+
+/* scoreboard */
+#hud{display:flex;justify-content:space-between;align-items:flex-end;padding:2px 6px}
+.side{display:flex;flex-direction:column;gap:2px}
+.side.right{align-items:flex-end}
+.who{font-weight:800;font-size:15px;letter-spacing:2.5px;text-transform:uppercase;color:var(--chalk-dim)}
+.side.right .who{color:var(--teal)}
+.hot-flag{font-size:13px;letter-spacing:0}
+.letters{display:flex;gap:5px}
+.slot{
+  width:30px;height:38px;border:1.5px dashed rgba(236,231,218,.22);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Caveat',cursive;font-size:30px;font-weight:700;color:transparent;
+}
+.slot.earned{color:var(--chalk);border-color:rgba(236,231,218,.45);animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
+.right .slot.earned{color:var(--teal);border-color:rgba(127,209,192,.5)}
+@keyframes pop{0%{transform:scale(.2) rotate(-14deg)}100%{transform:scale(1) rotate(0)}}
+.slot:nth-child(odd).earned{transform:rotate(-4deg)}
+.slot:nth-child(even).earned{transform:rotate(3deg)}
+#title{
+  font-weight:800;font-size:20px;letter-spacing:4px;color:var(--chalk);
+  align-self:center;text-align:center;line-height:1;padding-bottom:4px;
+}
+#title small{display:block;font-family:'Caveat',cursive;font-size:15px;letter-spacing:1px;color:var(--dusk-glow);font-weight:700}
+
+/* court */
+#stage{position:relative;width:100%}
+canvas{display:block;width:100%;height:auto;border-radius:10px;touch-action:none;background:var(--asphalt)}
+#muteBtn{
+  position:absolute;top:10px;right:10px;z-index:4;
+  width:44px;height:44px;border-radius:50%;
+  border:1.5px solid rgba(236,231,218,.3);background:rgba(21,22,28,.55);
+  color:var(--chalk);font-size:18px;cursor:pointer;touch-action:manipulation;
+}
+#muteBtn.muted{opacity:.55}
+
+/* trick shot modifier chips */
+#mods{
+  display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;
+  min-height:48px;visibility:hidden;
+}
+#mods.show{visibility:visible}
+.mods-label{font-family:'Caveat',cursive;font-size:20px;font-weight:700;color:var(--chalk-dim)}
+.chip{
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;
+  letter-spacing:1.5px;text-transform:uppercase;
+  background:none;border:1.5px solid rgba(236,231,218,.35);color:var(--chalk-dim);
+  padding:8px 14px;border-radius:999px;cursor:pointer;min-height:44px;
+  touch-action:manipulation;transition:all .15s;
+}
+.chip:hover,.chip:focus-visible{border-color:var(--chalk);color:var(--chalk);outline:none}
+.chip.sel{border-color:var(--ball);color:var(--ball)}
+
+/* chalk talk line */
+#msg{
+  min-height:44px;text-align:center;font-family:'Caveat',cursive;font-size:24px;font-weight:700;
+  color:var(--chalk);padding:4px 10px;line-height:1.15;
+  transition:opacity .25s;
+}
+#msg .tag{color:var(--teal);font-family:'Barlow Condensed';font-size:13px;font-weight:800;letter-spacing:2px;display:block}
+#hint{
+  text-align:center;font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--chalk-dim);min-height:16px;
+}
+
+/* overlays */
+.overlay{
+  position:absolute;inset:0;border-radius:10px;
+  background:rgba(21,22,28,.88);backdrop-filter:blur(3px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  text-align:center;padding:20px;z-index:5;
+}
+.overlay h1{font-weight:800;font-size:46px;letter-spacing:8px;line-height:1}
+.overlay h1 span{color:var(--ball)}
+.overlay p{font-family:'Caveat',cursive;font-size:22px;color:var(--chalk-dim);max-width:360px}
+.overlay p.small{font-size:17px;opacity:.85}
+.overlay p.stats{
+  font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--chalk-dim);
+}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.overlay button{
+  font-family:'Barlow Condensed';font-weight:800;font-size:17px;letter-spacing:2px;text-transform:uppercase;
+  background:none;border:2px solid var(--chalk);color:var(--chalk);
+  padding:10px 22px;border-radius:6px;cursor:pointer;transition:all .15s;
+  min-height:48px;touch-action:manipulation;
+}
+.overlay button:hover,.overlay button:focus-visible{background:var(--chalk);color:var(--asphalt-deep);outline:none}
+.overlay button.hot{border-color:var(--ball);color:var(--ball)}
+.overlay button.hot:hover,.overlay button.hot:focus-visible{background:var(--ball);color:var(--asphalt-deep)}
+.overlay .btnrow button small{
+  display:block;font-size:11px;letter-spacing:1px;font-weight:600;margin-top:2px;color:var(--chalk-dim);
+}
+.overlay .btnrow button:hover small,.overlay .btnrow button:focus-visible small{color:inherit}
+.hidden{display:none!important}
+
+/* phones / portrait */
+@media (max-width:540px){
+  #title{font-size:17px;letter-spacing:3px}
+  .overlay h1{font-size:36px;letter-spacing:5px}
+  .overlay p{font-size:19px}
+  .slot{width:24px;height:32px;font-size:24px}
+  #msg{font-size:21px}
+  .chip{font-size:13px;padding:8px 11px}
+  .overlay button{padding:12px 16px;font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){.slot.earned{animation:none}}
